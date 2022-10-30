@@ -71,6 +71,8 @@ header {
   padding-left: 10px;
   width: 15%;
   margin-left: 80vw;
+  box-shadow: 10px 5px 5px black;
+  position: absolute;
 }
 .basket-item {
   display: flex;
