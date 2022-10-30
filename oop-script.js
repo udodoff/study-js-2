@@ -6,6 +6,7 @@ class Pruductlist{
             .then(data => {
                 this.goods = data
                 this.render()
+                console.log(this.goods);
             })
     }
 
