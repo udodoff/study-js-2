@@ -2,6 +2,10 @@
   margin: 0;
   padding: 0;
 }
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
 .goods-list {
   display: flex;
   justify-content: center;
@@ -30,8 +34,8 @@
   padding-right: 7px;
 }
 header {
-  margin-top: 30px;
-  text-align: center;
+  margin-top: 15px;
+  text-align: right;
   margin-bottom: 30px;
 }
 .cart-button {
@@ -43,7 +47,9 @@ header {
   padding-right: 7px;
   background-color: palevioletred;
   color: white;
+  margin-right: 29vh;
 }
+
 .item-photo {
   width: 200px;
   margin-bottom: 15px;
@@ -56,4 +62,28 @@ header {
   padding-top: 5px;
   padding-bottom: 5px;
   font-size: 18px;
+}
+.basket {
+  margin-top: 15px;
+  background-color: palevioletred;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  width: 15%;
+  margin-left: 80vw;
+}
+.basket-item {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  color: white;
+}
+.item-basket-photo {
+  width: 40%;
+}
+.basket-item:last-of-type {
+  margin-top: 10px;
+}
+.none {
+  display: none;
 }
