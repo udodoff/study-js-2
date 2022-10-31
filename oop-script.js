@@ -2,6 +2,7 @@ class Pruductlist{
     constructor(container = '.goods-list'){
         this.container = container
         this.goods = []
+        this.filteredGoods = []
         this._fetchProducts()
             .then(data => {
                 this.goods = data
@@ -10,6 +11,19 @@ class Pruductlist{
             })
     }
 
+    filterGoods(value) {
+        const regexp = new RegExp(value, 'i')
+        this.filteredGoods = this.goods.filter(product => regexp.test(product.product_name))
+        this.goods.forEach(el => {
+            const productEl = document.querySelector(`.goods-item[data-id="${el.id_product}"]`)
+            if(!this.filteredGoods.includes(el)){
+                productEl.classList.add('none')
+            } else{
+                productEl.classList.remove('none')
+            }
+        })
+    }
+        
     sumofproducts(){
         let sum = 0
         this.goods.forEach(product => {
@@ -31,6 +45,11 @@ class Pruductlist{
             const item = new PruductItem(product)
             block.insertAdjacentHTML('beforeend', item.render())
         }
+        const searchEl = document.querySelector('.filter')
+        searchEl.addEventListener('submit', event => {
+            event.preventDefault()
+            this.filterGoods(document.querySelector('.goods-search').value)
+        })
     }
 }
 class PruductItem{
@@ -41,7 +60,7 @@ class PruductItem{
         this.img = img
     }
     render(){
-        return `<div class="goods-item">
+        return `<div class="goods-item" data-id="${this.id}">
                     <img class="item-photo" src="${this.img}">
                     <h3 class="heading">${this.title}</h3>
                     <p class="parag">$${this.price}</p>

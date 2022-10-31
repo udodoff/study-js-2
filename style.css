@@ -35,8 +35,11 @@
 }
 header {
   margin-top: 15px;
-  text-align: right;
-  margin-bottom: 30px;
+  width: 16%;
+  margin-bottom: 70px;
+  margin-left: 52%;
+  gap: 52%;
+  display: flex;
 }
 .cart-button {
   border-radius: 7px;
@@ -47,7 +50,7 @@ header {
   padding-right: 7px;
   background-color: palevioletred;
   color: white;
-  margin-right: 29vh;
+  /* margin-right: 29vh; */
 }
 
 .item-photo {
@@ -70,7 +73,7 @@ header {
   padding-bottom: 10px;
   padding-left: 10px;
   width: 15%;
-  margin-left: 80vw;
+  /* margin-left: 80vw; */
   box-shadow: 10px 5px 5px black;
   position: absolute;
 }
@@ -88,4 +91,9 @@ header {
 }
 .none {
   display: none;
+}
+.filter {
+  display: flex;
+  height: 30px;
+  gap: 23px;
 }
