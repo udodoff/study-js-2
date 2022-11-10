@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>E-shop</title>
+    <script
+      src="https://kit.fontawesome.com/7e01259ada.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="header-top">
+        <div class="container flex-header">
+          <h1 class="title">E-shop</h1>
+          <div class="menu-header">
+            <form action="#" @submit.prevent="filter()">
+              <input type="text" v-model="userSearch" />
+              <button class="btn-search" type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </form>
+            <div class="cart-container">
+              <button @click="isShow = !isShow" type="submit" class="cart-btn">
+                Корзина
+              </button>
+              <div class="cart-block" v-show="isShow">
+                <p v-if="cartItems.length == 0">Cart is empty</p>
+                <div v-for="item of cartItems" class="cart-item">
+                  <img
+                    :src="img"
+                    :alt="item.product_name"
+                    class="img-cart-prod"
+                  />
+                  <div class="cart-item-desc">
+                    <p class="product-cart-title">{{item.product_name}}</p>
+                    <p class="product-cart-price">${{item.price}}</p>
+                    <p class="product-cart-quantity">
+                      Quantity: {{item.quantity}}
+                    </p>
+                  </div>
+                  <div class="right-block">
+                    <p>Total: {{item.price * item.quantity}}</p>
+                    <button
+                      type="submit"
+                      class="delete-btn"
+                      @click="remove(item)"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <main>
+        <div class="card" v-for="item of filtered">
+          <img class="img-product" :src="img" :alt="item.product_name" />
+          <p class="title-product">{{item.product_name}}</p>
+          <p class="price-product">{{item.price}}</p>
+          <button
+            @click="addProduct(item)"
+            class="buy-btn-product"
+            type="submit"
+          >
+            Купить
+          </button>
+        </div>
+      </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+      const api =
+        "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json";
+      const basketApi =
+        "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/getBasket.json";
+      const basketDelete =
+        "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/deleteFromBasket.json";
+      const addToBasket =
+        "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/addToBasket.json";
+      const app = new Vue({
+        el: "#app",
+        data: {
+          cartItems: [],
+          products: [],
+          filtered: [],
+          userSearch: "",
+          isShow: false,
+          img: "https://images.unsplash.com/photo-1599069157089-718986d745d7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8dm9pZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+        },
+        methods: {
+          filter() {
+            const regexp = new RegExp(this.userSearch, "i");
+            this.filtered = this.products.filter((product) =>
+              regexp.test(product.product_name)
+            );
+          },
+          fetchProducts(url) {
+            return fetch(url)
+              .then((res) => res.json())
+              .catch((err) => console.log(err));
+          },
+          addProduct(prod) {
+            this.fetchProducts(addToBasket).then((res) => {
+              if (res.result === 1) {
+                let findItem = this.cartItems.find(
+                  (el) => el.id_product === prod.id_product
+                );
+                if (findItem) {
+                  findItem.quantity++;
+                } else {
+                  const product = Object.assign({ quantity: 1 }, prod);
+                  this.cartItems.push(product);
+                }
+              }
+            });
+          },
+          remove(product) {
+            this.fetchProducts(basketDelete).then((res) => {
+              if (res.result === 1) {
+                if (product.quantity > 1) {
+                  product.quantity--;
+                } else {
+                  this.cartItems.splice(this.cartItems.indexOf(product), 1);
+                }
+              }
+            });
+          },
+        },
+        mounted() {
+          this.fetchProducts(api).then((result) => {
+            for (let el of result) {
+              this.products.push(el);
+              this.filtered.push(el);
+            }
+          });
+          this.fetchProducts(basketApi).then((result) => {
+            for (let el of result.contents) {
+              this.cartItems.push(el);
+            }
+          });
+        },
+      });
+    </script>
+  </body>
+</html>
