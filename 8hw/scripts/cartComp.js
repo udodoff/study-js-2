@@ -26,7 +26,7 @@ Vue.component('cart-comp',{
         getTotalPrice(){
           let total = 0
           this.cart.forEach(el => {
-            total += el.price
+            total += el.price * el.quantity
           });
           console.log(total);
           return total
