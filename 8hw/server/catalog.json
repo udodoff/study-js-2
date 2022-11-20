@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "title": "first product",
+        "price": 200
+    },
+    {
+        "id": 2,
+        "title": "second product",
+        "price": 350
+    },
+    {
+        "id": 3,
+        "title": "third product",
+        "price": 200
+    },
+    {
+        "id": 4,
+        "title": "fourth product",
+        "price": 400
+    },
+    {
+        "id": 5,
+        "title": "fifth product",
+        "price": 150
+    },
+    {
+        "id": 6,
+        "title": "sixth product",
+        "price": 285
+    }
+]
